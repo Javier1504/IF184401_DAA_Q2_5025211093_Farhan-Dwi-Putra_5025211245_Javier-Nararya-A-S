@@ -1,20 +1,18 @@
 # IF184401_DAA_Q2_5025211093_Farhan-Dwi-Putra_5025211245_Javier-Nararya-A-S
 Game Ular kelaparan menggunakan bahasa C++ dan mengimplementasikan menggunakan greedy algorithm dan a*
 
-##
+## Penjelasan
 #include <iostream>
-#include <windows.h> //menggunakan gotoxy, GetAsyncKeyState,
-//dan beberapa fungsi lainnya
-//Awal pendeklarasian beberapa konstanta
+#include <windows.h> //menggunakan gotoxy, GetAsyncKeyState
+
 #define batas_atas 2 //batas_atas game
 #define batas_bawah 23 //batas_bawah_game
 #define batas_samping 2 // batas samping kiri game
 #define batas_samping_k 78 //batas samping kanan game
-//Akhir pendeklarasian konstanta
+
 using namespace std;
 //pendeklarasian variabel
-int iX(5), iY(5), x1 (4), y1 (4), xHapus(3), yHapus(3), veloX(1), veloY(0)
-   ,ekorsX[200], ekorsY[200], nEkor = 5, start = 0, makX, makY;
+int iX(5), iY(5), x1 (4), y1 (4), xHapus(3), yHapus(3), veloX(1), veloY(0) ,ekorsX[200], ekorsY[200], nEkor = 5, start = 0, makX, makY;
 
 void gotoxy(int x, int y) //Void untuk gotoxy, memindahkan kursor pada console
 {
@@ -30,8 +28,8 @@ void naik() //untuk gerak Snake ke atas
 
 void turun()
 {
-  veloY = 1; //sda
-  veloX = 0; //sda
+  veloY = 1; 
+  veloX = 0; 
 }
 
 void samping()
