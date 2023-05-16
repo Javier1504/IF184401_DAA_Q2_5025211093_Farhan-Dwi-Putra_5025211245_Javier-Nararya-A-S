@@ -1,25 +1,25 @@
 #include <iostream>
-#include <windows.h> //menggunakan gotoxy, GetAsyncKeyState
+#include <windows.h> //use gotoxy, GetAsyncKeyState
 
-#define batas_atas 2 //batas_atas game
-#define batas_bawah 23 //batas_bawah_game
-#define batas_samping 2 // batas samping kiri game
-#define batas_samping_k 78 //batas samping kanan game
+#define batas_atas 2 // upside game border
+#define batas_bawah 23 // bottom side game border
+#define batas_samping 2 // left side game border
+#define batas_samping_k 78 // right side game border
 
 using namespace std;
-//pendeklarasian variabel
+// declare variable
 int iX(5), iY(5), x1 (4), y1 (4), xHapus(3), yHapus(3), veloX(1), veloY(0) ,ekorsX[200], ekorsY[200], nEkor = 5, start = 0, makX, makY;
 
-void gotoxy(int x, int y) //Void untuk gotoxy, memindahkan kursor pada console
+void gotoxy(int x, int y) // Void for gotoxy, move cursor on console
 {
  COORD pos = {x, y};
  SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
 }
 
-void naik() //untuk gerak Snake ke atas
+void naik() //function that allow snake move up
 {
-  veloY = -1; //Kecepatan Y menjadi ke atas
-  veloX = 0; //kecepatan X dinolkan
+  veloY = -1; // Y speed go up
+  veloX = 0; // X speed is zero
 }
 
 void turun()
@@ -42,7 +42,7 @@ void samping_k()
 
 void hapus()
 {
- gotoxy(xHapus, yHapus); //untuk menghapus bagian yang sudah dilewati
+ gotoxy(xHapus, yHapus); // for deleting passed part 
  cout << " ";
 }
 
@@ -57,16 +57,16 @@ void ekor()
 
 void tampil()
 {
- gotoxy(iX, iY); //iX dan iY adalah posisi gambar kepala
- cout << char(2); //untuk menggambar gambar kepala
- //karena ascii dari smiley tsb adalh 2
+ gotoxy(iX, iY); //iX and iY are head picture position 
+ cout << char(2); //for draw head picture
+ //because ascii from smiley is 2
  gotoxy(makX, makY);
- //nilai makX dan makY adalah random
- //digunakan untuk posisi makanan, jadi posisi makanan random
- cout << "*"; //gambar makanan
+ // makX and makY value is random
+ // use for food position(random)
+ cout << "*"; //food picture
 }
 
-void ganti_posisi() //mengganti posisi dari ekor ekor snake
+void ganti_posisi() //change position
 {
  xHapus = ekorsX[nEkor - 1];
  yHapus = ekorsY[nEkor - 1];
@@ -79,8 +79,7 @@ void ganti_posisi() //mengganti posisi dari ekor ekor snake
   ekorsY[0] = iY;
 }
 
-void velo() //fungsi untuk melakukan update posisi snake sesuai tombol
-//yang ditekan
+void velo() //for update position of snake according button we press
 {
  ganti_posisi();
  hapus();
@@ -103,7 +102,7 @@ void velo() //fungsi untuk melakukan update posisi snake sesuai tombol
 
 bool isDestroy()
 {
- //melakukan cek apakah snake sudah kalah fungsi ini juga menghapus kepala snake yang tersisa jika membentur dinding
+ //check snake condition (deleting head if colliding frame too)
  if(iX == batas_samping_k) { iX = 3; gotoxy(78, iY); cout << " "; }
  if(iX == batas_samping)  { iX = 77; gotoxy(2, iY); cout << " "; }
  if(iY == batas_atas) { iY = 22; gotoxy(iX, 2); cout << " "; }
@@ -115,7 +114,7 @@ bool isDestroy()
 }
 
 
-char getkey()//fungsi untuk mendapatkan tombol yang ditekan
+char getkey()// for getting pressed button
 {
  for(int i = 8; i <= 222; i++)
  {
@@ -124,13 +123,13 @@ char getkey()//fungsi untuk mendapatkan tombol yang ditekan
    switch(i)
    {
     case 38 : if(veloY != 1)naik();
-              break;//jika tombol yang ditekan adalah atas
+              break;//if pressed button is up
     case 40 : if(veloY != -1)turun();
-              break; //jika tombol yang ditekan adalah bawah
+              break; //if pressed button is down
     case 37 : if(veloX != 1)samping();
-              break; //jika tombol yang ditekan adalah kiri
+              break; //if pressed button is left
     case 39 : if(veloX != -1)samping_k();
-              break; //jika tombol yang ditekan adalah kanan
+              break; //if pressed button is right
    }
   }
  }
@@ -139,7 +138,7 @@ char getkey()//fungsi untuk mendapatkan tombol yang ditekan
 void random_makanan()
 {
  makX = rand()%(batas_samping_k - 1);
- if(makX < 4) makX += 3 + (4-makX); //mencegah agar makanan tidak diluar batas
+ if(makX < 4) makX += 3 + (4-makX); //for limiting feed
  makY = rand()%(batas_bawah - 1);
  if(makY < 4) makY += 3 + (4-makY);
  gotoxy(makX, makY);
@@ -151,7 +150,7 @@ bool isEaten()
  if(iX == makX && iY == makY) return true; else return false;
 }
 
-void cBorder() //Fungsi untuk membuat garis tepi game
+void cBorder() //make border game
 {
  for(int i = 1; i <= 78; i++)
  {
@@ -171,48 +170,46 @@ void cBorder() //Fungsi untuk membuat garis tepi game
   }
  }
 }
-//akhir pembuatan garis tepi
-//Penulisan Skor
+//Writing Score
 void skor()
 {
  gotoxy(3,1); cout << "Skor : ";
  gotoxy(18,1); cout << "Panjang : ";
 }
-//Untuk menulis skor terbaru dan panjang dari snake
+//write new score and write the length of snake
 void tulis_skor()
 {
  gotoxy(11,1); cout << (nEkor - 5) * 10;
  gotoxy(28,1); cout << nEkor;
 }
-//Fungsi yang menjalankan beberapa fungsi yang berjalan
-//pada awal program, hanya sekali
+//run some function
+//in the begin of program, only once
 void inisialisasi()
 {
- cBorder(); //buat pinggiran game
- random_makanan(); //letakkan makanan secara random
- skor(); //tulis tulisan skor di tepi atas
- tulis_skor(); //menulis skor
+ cBorder(); //make sideline of game
+ random_makanan(); //put food randomly
+ skor(); //write score at up side
+ tulis_skor(); //write score
 }
 
-int main() //fungsi Utama
+int main() // main function
 {
- system("cls"); //membersihkan layar
- inisialisasi(); //menjalankan fungsi inisialisasi
- while(!(isDestroy())) //selama snake belum rusak atau kalah
+ system("cls"); //clear screen
+ inisialisasi(); //run iniialize func
+ while(!(isDestroy())) //while snake not lose yet
   {
-   velo(); //merubah posisi snake berdasarkan kecepatan X atau Y
-   getkey(); //untuk mendapatkan tombol apa yang ditekan user dan
-   //menjalankan beberapa fungsi yang diperlukan
-   if(isEaten())//mencek apakah makanan telah dilalap oleh snake
+   velo(); //change snake speed according X or Y
+   getkey(); //get pressed button
+   if(isEaten())//check status of food
    {
-    nEkor += 2; //panjang ekor ditambah 2
-    random_makanan(); //makanan diletakkan lagi
-    tulis_skor();//skor di update
+    nEkor += 2; //tail length plus by 2
+    random_makanan(); //put food again
+    tulis_skor();//update score
    }
-   Sleep(40 - (nEkor / 10)); //delay yang semakin cepat dengan penambahan ekor
+   Sleep(40 - (nEkor / 10)); //delay more faster while the length more long too
   }
- system("cls"); //layar dibersihkan
- gotoxy(32,12); cout << "Skor : " << (nEkor - 5) * 10; //ditampilkan skor
+ system("cls"); //clear screen
+ gotoxy(32,12); cout << "Skor : " << (nEkor - 5) * 10; //show score
  gotoxy(25,13);
- system("pause"); //selesai
+ system("pause"); //finish
 }
