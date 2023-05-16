@@ -30,14 +30,14 @@ void turun()
 
 void samping()
 {
-  veloX = -1; //sda
-  veloY = 0; //sda
+  veloX = -1; 
+  veloY = 0; 
 }
 
 void samping_k()
 {
-  veloX = 1; //sda
-  veloY = 0; //sda
+  veloX = 1; 
+  veloY = 0; 
 }
 
 void hapus()
@@ -103,8 +103,7 @@ void velo() //fungsi untuk melakukan update posisi snake sesuai tombol
 
 bool isDestroy()
 {
- //selain untuk mencek apakah snake sudah kalah
- //fungsi ini juga menghapus kepala snake yang tersisa jika membentur dinding
+ //melakukan cek apakah snake sudah kalah fungsi ini juga menghapus kepala snake yang tersisa jika membentur dinding
  if(iX == batas_samping_k) { iX = 3; gotoxy(78, iY); cout << " "; }
  if(iX == batas_samping)  { iX = 77; gotoxy(2, iY); cout << " "; }
  if(iY == batas_atas) { iY = 22; gotoxy(iX, 2); cout << " "; }
